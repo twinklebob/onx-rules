@@ -68,6 +68,8 @@ if (!(device.version && device.version.isSupported(0, 55))) {
       if(device.calendar.ongoing.length > 0) {
 	  for(i=0; i<device.calendar.ongoing.length; i++) {
 	      var currentAppointment = device.calendar.ongoing[i];
+	      console.info("Found appointment: " + currentAppointment.title + " in calendar " + currentAppointment.calendarName + ". Is All day? " + currentAppointment.isAllDay);
+	      
 	      if(!currentAppointment.isAllDay) {
 		  booInAppointment = true;
 	      }

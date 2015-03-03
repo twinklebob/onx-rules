@@ -2,7 +2,7 @@
 
 // Initializing variables 
 
-var deviceName = "BT-CarKit";
+var deviceName = "VBC-001-BLK";
 
 // End of variables initializing 
 
@@ -10,7 +10,7 @@ console.log('Started Script:' + device.currentSource);
 
 if (!(device.version && device.version.isSupported(0, 54))) {
 
-	var notification = device.notifications.createNotification('on{X} is out of date');
+    var notification = device.notifications.createNotification('on{X} is out of date');
 	notification.content = "the recipe '" + device.currentSource + "' requires an up to date on{X} application.";
 	notification.show();
 }
@@ -29,13 +29,21 @@ else {
 	device.modeOfTransport.samplingInterval = 60000;
 
 	// register on 'connected' event to determine whether the device is near
-	device.bluetooth.on('connected', function (bluetoothDevice) {
-		console.log('A bluetooth device was connected! Yeehaw! ' + bluetoothDevice.name);
+	device.bluetooth.on('found', function (bluetoothDevice) {
+		console.log('A bluetooth device was found! Yeehaw! ' + bluetoothDevice.name);
 		if (bluetoothDevice.name === deviceName) {
 			// found the device
 			found = true;
+			// Connect to it
+			device.bluetooth.createConnection(bluetoothDevice.address);
+			// stop the timer searching
 			device.scheduler.removeTimer(timerName);
 		}
+	});
+	
+	// register on 'connected' event to determine whether the device is near
+	device.bluetooth.on('connected', function (bluetoothDevice) {
+	  console.log('A bluetooth device was connected! Yeehaw! ' + bluetoothDevice.name);
 	});
 	
 	device.bluetooth.on('disconnected', function(bluetoothDevice){

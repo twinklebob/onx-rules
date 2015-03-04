@@ -4,6 +4,7 @@ var ringerModeOnAppointmentStart = "vibrate";
 var ringerModeOnAppointmentEnd = "normal";
 
 // End of variables initializing 
+console.log('Started Script:' + device.currentSource);
 
 if (!(device.version && device.version.isSupported(0, 55))) {
     var notification = device.notifications.createNotification('on{X} is out of date');
@@ -77,3 +78,5 @@ if (!(device.version && device.version.isSupported(0, 55))) {
       }
       return (booInAppointment);
   }
+  
+  console.log('Completed Script:' + device.currentSource);

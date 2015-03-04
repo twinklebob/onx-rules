@@ -6,16 +6,13 @@ var deviceName = "VBC-001-BLK";
 
 // End of variables initializing 
 
-console.log('Started Script:' + device.currentSource);
+console.log('Started Script: ' + device.currentSource);
 
-if (!(device.version && device.version.isSupported(0, 54))) {
-
-    var notification = device.notifications.createNotification('on{X} is out of date');
+if (!(device.version && device.version.isSupported(0, 55))) {
+	var notification = device.notifications.createNotification('on{X} is out of date');
 	notification.content = "the recipe '" + device.currentSource + "' requires an up to date on{X} application.";
 	notification.show();
-}
-else {
-
+} else {
 	// time to wait for connection
 	var timeOut = 15000;
 
@@ -27,6 +24,8 @@ else {
 
 	// check for MOT state change every minute
 	device.modeOfTransport.samplingInterval = 60000;
+	
+	console.log("Mode of Transport sampling interval set to: " + device.modeOfTransport.samplingInterval);
 
 	// register on 'connected' event to determine whether the device is near
 	device.bluetooth.on('found', function (bluetoothDevice) {
@@ -43,7 +42,7 @@ else {
 	
 	// register on 'connected' event to determine whether the device is near
 	device.bluetooth.on('connected', function (bluetoothDevice) {
-	  console.log('A bluetooth device was connected! Yeehaw! ' + bluetoothDevice.name);
+		console.log('A bluetooth device was connected! Yeehaw! ' + bluetoothDevice.name);
 	});
 	
 	device.bluetooth.on('disconnected', function(bluetoothDevice){
@@ -83,4 +82,4 @@ else {
 	});
 }
 
-console.log('Completed Script:' + device.currentSource);
+console.log('Completed Script: ' + device.currentSource);
